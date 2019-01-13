@@ -24,6 +24,18 @@
     <ClInclude Include="Client.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="AllMember.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Personality.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TCPChatroom.cpp">
@@ -37,6 +49,18 @@
     </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="AllMember.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Personality.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Instruction.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>資源檔</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

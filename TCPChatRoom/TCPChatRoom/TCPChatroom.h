@@ -10,6 +10,7 @@
 #pragma warning(disable:4996)
 using namespace std;
 class TCPChatRoom {
+    friend class UI;
 public:
     TCPChatRoom(const string&);
     void setRoomName(const string&);

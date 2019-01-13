@@ -12,8 +12,11 @@ int main() {
     }
     else {
         Client client("discord");
+        string usrName;
         cout << "Welcome to " << client.getRoomName() <<" client"<< endl;
-        client.startClient();
+        cout << "Please Input Your ID : " << endl;
+        cin >> usrName;
+        client.startClient(usrName);
     }
 
     return 0;
