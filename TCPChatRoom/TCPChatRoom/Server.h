@@ -8,9 +8,17 @@ public:
     void startServer();
 	void addNewUser(char*);
 	void recvMsg(char*);
-    
+	void recvPrivateMsg(char*);
+    void sendPrivateMsg(char*);
+    struct privateMsg {
+        char *sender;
+        char *recver;
+        char *msg;
+    };
 protected:
     vector<string> msgs; //sourcename,msgs
+	vector<pair<string, string>> privateMsgs;
+    //vector<privateMsg> priMsgs;
     //vector<pair<string, string>> onlineUser;//ip+port,username
     vector<pair<string, string>>::iterator iter2;
     map<string, string> onlineUser;
@@ -30,4 +38,5 @@ private:
     SOCKET sListen;
     SOCKET sConnect;
     SOCKADDR_IN clinetAddr;
+    
 };

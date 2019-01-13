@@ -19,7 +19,7 @@ void Client::startClient(const string &usrName_) {
     while (1) {
         SOCKET sConnect;
         sConnect = socket(AF_INET, SOCK_STREAM, NULL);
-        cout << "Refresh[R] or SendMsg[S]" << endl;
+        cout << "Refresh[R] or SendMsg[S] or RefreshPri[L] or SendPriMsg[P]" << endl;
         cin >> confirm;
         connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
         if (confirm == "R") {
@@ -37,6 +37,32 @@ void Client::startClient(const string &usrName_) {
             //cout << "I send " << sendbuf << endl;
             send(sConnect, ("&"+ userName+" : " +sendbuf + "\n").c_str(), ("&" + userName + " : " + sendbuf + "\n").length(), 0);
             //for (int i = 0; i < 10; i++) {
+            ZeroMemory(message, 2000);
+            r = recv(sConnect, message, sizeof(message), 0);
+            //ui.print(message);
+            cout << message << endl;
+            //}
+            //const char *spliter = ":";
+            //split(message, spliter);
+        }
+        else if (confirm == "P") {
+            string sendbuf;
+            string toWho;
+            cout << "To who?" << endl;
+            cin >> toWho;
+            cout << "Input Your Msg : ";
+            cin >> sendbuf;
+            send(sConnect, ("/" + toWho +"/"+userName+"/" + sendbuf).c_str(), ("/" + toWho + "/" + userName + "/" + sendbuf).length(), 0);
+            ZeroMemory(message, 2000);
+            r = recv(sConnect, message, sizeof(message), 0);
+            //ui.print(message);
+            cout << message << endl;
+            //}
+            //const char *spliter = ":";
+            //split(message, spliter);
+        }
+        else if (confirm == "L") {
+            send(sConnect, ("$" + userName).c_str(), ("$" + userName).length(), 0);
             ZeroMemory(message, 2000);
             r = recv(sConnect, message, sizeof(message), 0);
             //ui.print(message);
