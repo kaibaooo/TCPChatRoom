@@ -10,6 +10,7 @@ using namespace std;
 void Instruction::Input() {
 	ShowInstruction();
 	detail.clear();
+	original.clear();
 	gotoxy(0, 25);
 	cout << ">> ";
 	getline(cin, original);
@@ -23,6 +24,7 @@ void Instruction::cutInput() {
 	int i = 0;
 	while (getline(buf, text, '/')) {
 		detail.push_back(text);
+		cout << text << endl;
 	}
 	//checkInstruction();
 }
@@ -43,6 +45,7 @@ void Instruction::ShowInstruction() {
 		gotoxy(88, i);
 		cout << "¢k";
 	}
+
 	gotoxy(90, 3);
 	cout << "All Instruction";
 
