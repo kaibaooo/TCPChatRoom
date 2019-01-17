@@ -14,6 +14,8 @@ public:
 	//void Showfriendagree(); //(顯示好友確認)
 	void Setstate(); //(設定個簽)
 	void Showfriends(); //(顯示好友列表)
+    void setGroup(string &);
+    string getGroup();
     string group;
 	string setstate; //(個人狀態)
 	string friends[5] = {"0"}; //(好友列表)

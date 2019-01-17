@@ -67,3 +67,10 @@ void Personality::Showfriends() {
 		cout << "You don't have any friend.QQ" << endl;
 	//Input();
 }
+
+void Personality::setGroup(string &grp) {
+    group = grp;
+}
+string Personality::getGroup() {
+    return group;
+}

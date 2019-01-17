@@ -28,8 +28,8 @@ void Server::startServer() {
         if (sConnect = accept(sListen, (SOCKADDR*)&clinetAddr, &addrlen)) {
             //RECV
             ZeroMemory(message, 200);
-
             r = recv(sConnect, message, sizeof(message), 0);
+
 			if (message[0] == '^') {
 				addNewUser(message);
 			}
@@ -42,9 +42,15 @@ void Server::startServer() {
 			else if (message[0] == '/') {
 				recvPrivateMsg(message);
 			}
-			else if (message[0] == '$') {
+			else if (message[0] == '$') {//當client要看私訊 傳回她和朋友的訊息
                 //cout << "YEEEEEEEEEEEEEEEE" << endl;
 				sendPrivateMsg(message);
+			}
+			else if (message[0] == '*') {
+				recvUserStatus(message);
+			}
+			else if (message[0] == '~') {
+				sendUserStatus();
 			}
 			/*
             userNameList = userNameList + string(userNameinput) + ":";
@@ -175,9 +181,6 @@ void Server::sendPrivateMsg(char *message) {
 		s.erase(0, pos + suber.length());
 	}
 	destName = s;
-	cout << sourName << endl;
-	cout << destName << endl;
-	
 	int flag = 0;
 	string sendMsg;//要送出的字串
     for (iterMsgs = privateMsgs.begin(); iterMsgs != privateMsgs.end(); iterMsgs++) {
@@ -216,5 +219,74 @@ void Server::sendPrivateMsg(char *message) {
 	if (sendMsg.length()==0) {
 		sendMsg = "No one want to send a message to you, Nerd";
 	}
+	send(sConnect, sendMsg.c_str(), sendMsg.length(), 0);
+}
+void Server::recvUserStatus(char*message) {
+	string name;
+	string status;
+	string sendMsg = "Set successfully!\n";
+	string s = string(message);
+	int pos = 1;
+	string suber = "/";
+	string token;
+	s = s.substr(1);
+	while ((pos = s.find(suber)) != string::npos) {
+		token = s.substr(0, pos);
+		name = token;
+		s.erase(0, pos + suber.length());
+	}
+	status = s;
+	//判斷此使用者有沒有宣告過status
+	int flat = 0;
+	for (iterStatus = userStatus.begin(); iterStatus != userStatus.end(); iterStatus++)
+	{
+		if (name == iterStatus->first) {
+			iterStatus->second = status;
+			flat = 1;
+		}
+	}
+	if (flat == 0) {
+		userStatus.push_back(make_pair(name, status));
+	}
+	send(sConnect, sendMsg.c_str(), sendMsg.length(), 0);
+}
+void Server::sendUserStatus() {
+	string s = userNameList;
+    string sendMsg;
+	cout << userNameList << endl;
+	int pos = 1;
+	string suber = ":";
+	string token;
+
+	while ((pos = s.find(suber)) != string::npos) {
+		token = s.substr(0, pos);
+		int flat = 0;
+		for (iterStatus = userStatus.begin(); iterStatus != userStatus.end(); iterStatus++)
+		{
+            cout << token<< endl;
+			if (token == iterStatus->first) {
+				sendMsg = sendMsg + iterStatus->first+"=>"+ iterStatus->second + "\n";
+				flat = 1;
+			}
+		}
+		if (flat == 0) {
+			sendMsg = sendMsg + token + "=>" + "null" + "\n";
+		}
+		s.erase(0, pos + suber.length());
+	}
+	int flat = 0;
+	/*
+	for (iterStatus = userStatus.begin(); iterStatus != userStatus.end(); iterStatus++)
+	{
+		if (s == iterStatus->first) {
+			sendMsg = sendMsg + iterStatus->first + "=>" + iterStatus->second + "\n";
+			flat = 1;
+		}
+	}
+	if (flat == 0) {
+		sendMsg = sendMsg + token + "=>" + "null" + "\n";
+	}
+	*/
+	
 	send(sConnect, sendMsg.c_str(), sendMsg.length(), 0);
 }

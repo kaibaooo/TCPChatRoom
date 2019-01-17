@@ -11,7 +11,7 @@ Client::Client(const string &chatroomName):TCPChatRoom(chatroomName) {
 void Client::startClient(const string &usrName_) {
     //初始化使用者名稱
     if (usrName_ == "Guest" || usrName_ == "guest") {
-
+        group = "guest";
     }
     setUserName(usrName_);
     //送使用者名單給Server
@@ -23,7 +23,7 @@ void Client::startClient(const string &usrName_) {
         string confirm;
         SOCKET sConnect;
         sConnect = socket(AF_INET, SOCK_STREAM, NULL);
-        cout << "Refresh[R] or SendMsg[S] or RefreshPri[L] or SendPriMsg[P]" << endl;
+        cout << "Refresh[R] or SendMsg[S] or RefreshPri[L] or SendPriMsg[P] or editStatus[U] or updateStatus[Q] or exit[E] "<< endl;
         cin >> confirm;
 		//Input();
 		//checkInstruction();
@@ -80,6 +80,29 @@ void Client::startClient(const string &usrName_) {
             //const char *spliter = ":";
             //split(message, spliter);
         }
+        else if (confirm == "U") { //refresh private message
+            string status;
+            cout << "New Status : ";
+            cin >> status;
+            send(sConnect, ("*" + userName + "/" + status).c_str(), ("*" + userName + "/" + status).length(), 0);
+            ZeroMemory(message, 2000);
+            r = recv(sConnect, message, sizeof(message), 0);
+            //ui.print(message);
+            cout << message << endl;
+            //}
+            //const char *spliter = ":";
+            //split(message, spliter);
+        }
+        else if (confirm == "Q") {
+            send(sConnect, "~", strlen("~"), 0);
+            ZeroMemory(message, 2000);
+            r = recv(sConnect, message, sizeof(message), 0);
+            cout << message << endl;
+        }
+        else if (confirm == "E") {
+            send(sConnect, "#", strlen("#"), 0);
+            exit;
+        }
         closesocket(sConnect);
     }
 }
@@ -126,7 +149,6 @@ void Client::checkInstruction() {
 			}
 			else {
 				cout << original << "is an illagle instruction." << endl;
-				Input();
 			}
 		}
 		else if (detail[1] == "deletefriend") {
@@ -135,7 +157,6 @@ void Client::checkInstruction() {
 			}
 			else {
 				cout << original << "is an illagle instruction." << endl;
-				Input();
 			}
 		}
 		else if (detail[1] == "setstate") {
@@ -143,7 +164,6 @@ void Client::checkInstruction() {
 		}
 		else {
 			cout << detail[1] << "is invaild instruction" << endl;
-			Input();
 		}
 	}
 	else if (detail[0] == "show") {
@@ -153,9 +173,6 @@ void Client::checkInstruction() {
 		else if (detail[1] == "allmember") {
 			Showallmember();
 		}
-		else if (detail[1] == "instruction") {
-			Input();
-		}
 		else if (detail[1] == "signaters") {
 			ShowEveryPersonalitySignature();
 		}
@@ -164,13 +181,11 @@ void Client::checkInstruction() {
 		}
 		else {
 			cout << detail[1] << "is invaild instruction" << endl;
-			Input();
 		}
 	}
 	else if (detail[0] == "send") {
 		if (detail[1] == "group") {
 			cout << "function is not finished yet." << endl;
-			Input();
 		}
 		else if (detail[1] == "friend") {
 			cout << "function is not finished yet." << endl;

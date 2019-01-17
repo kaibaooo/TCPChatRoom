@@ -10,6 +10,8 @@ public:
 	void recvMsg(char*);
 	void recvPrivateMsg(char*);
     void sendPrivateMsg(char*);
+	void recvUserStatus(char*);
+	void sendUserStatus();
     struct privateMsg {
         char *sender;
         char *recver;
@@ -21,8 +23,10 @@ protected:
     //vector<privateMsg> priMsgs;
     //vector<pair<string, string>> onlineUser;//ip+port,username
     vector<pair<string, string>>::iterator iter2;
+	vector<pair<string, string>> userStatus;
     map<string, string> onlineUser;
     map<string, string>::iterator iter;
+	vector<pair<string, string>>::iterator iterStatus;
     vector<string>::iterator iterMsgs;
     string userNameList;//�^또돌client
 	string allChatList;//�^또돌client

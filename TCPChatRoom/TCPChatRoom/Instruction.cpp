@@ -58,9 +58,9 @@ void Instruction::ShowInstruction() {
 	gotoxy(90, 10);
 	cout << "SEND MESSAGE" << endl;
 	gotoxy(90, 11);
-	cout << "send/group/name/message" << endl;
+	cout << "send/group/string" << endl;
 	gotoxy(90, 12);
-	cout << "send/friend/name/message" << endl;
+	cout << "send/friend/name/string" << endl;
 
 	gotoxy(90, 14);
 	cout << "SHOW" << endl;
@@ -74,6 +74,11 @@ void Instruction::ShowInstruction() {
 	cout << "show/signater" << endl;
 	gotoxy(90, 19);
 	cout << "show/friends" << endl;
+	gotoxy(90, 20);
+	cout << "show/message/friendname" << endl;
+	gotoxy(90, 21);
+	cout << "show/message/group" << endl;
+	
 	gotoxy(0, 24);
 	for (int i = 0; i < 44; i++) {
 		cout << "¢f";
