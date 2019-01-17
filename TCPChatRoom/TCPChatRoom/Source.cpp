@@ -6,18 +6,22 @@ int main() {
     cout << "which excuting type do you want[1]Server [2]Client : ";
     cin >> executeType;
     if (executeType == 1) {
+        TCPChatRoom *TCPserver;
         Server server("NUK_CSIE_OOP_PROJ");
+        TCPserver = &server;
         cout << "Welcome to " << server.getRoomName() << " server" << endl;
-        server.startServer();
+		TCPserver->start("demo");
     }
     else {
+        TCPChatRoom *TCPclient;
         Client client("NUK_CSIE_OOP_PROJ");
+        TCPclient = &client;
         string usrName;
         cout << "Welcome to " << client.getRoomName() <<" client"<< endl;
         cout << "Please Input Your ID : " << endl;
         cin >> usrName;
         getchar();
-        client.startClient(usrName);
+		TCPclient->start(usrName);
     }
 
     return 0;

@@ -5,7 +5,7 @@ class Server:public TCPChatRoom{
 
 public:
     Server(const string &chatroomName);
-    void startServer();
+	virtual void start(const string &);
 	void addNewUser(char*);
 	void recvMsg(char*);
 	void recvPrivateMsg(char*);
@@ -13,7 +13,6 @@ public:
 	void recvUserStatus(char*);
 	void sendUserStatus();
 	void deletUser(char*);
-	
     void sendUserList();
     struct privateMsg {
         char *sender;

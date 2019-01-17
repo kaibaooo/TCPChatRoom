@@ -8,3 +8,6 @@ void TCPChatRoom::setRoomName(const string &name) {
 string TCPChatRoom::getRoomName() {
     return roomName;
 }
+void TCPChatRoom::start(const string &chatroomName) {
+    //setRoomName(chatroomName);
+}

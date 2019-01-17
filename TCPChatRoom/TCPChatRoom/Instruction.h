@@ -9,7 +9,6 @@ class Instruction {
 public:
 	void Input();
 	void cutInput();
-	void refresh();
 	void ShowInstruction();
 	//virtual void checkInstruction();//設虛擬函式，實作Personality
 	void gotoxy(int, int);

@@ -8,7 +8,7 @@ Client::Client(const string &chatroomName):TCPChatRoom(chatroomName) {
     addr.sin_port = htons(15501); //Set Port
     
 }
-void Client::startClient(const string &usrName_) {
+void Client::start(const string &usrName_)  {
 	//初始化使用者名稱
 	if (usrName_ == "Guest" || usrName_ == "guest") {
 		group = "guest";
@@ -49,7 +49,7 @@ void Client::startClient(const string &usrName_) {
 					cout << original << " is an illagle instruction." << endl;
 				}
 			}
-			else if (detail[1] == "state") {
+			else if (detail[1] == "signater") {
 				if (detail.size() == 3) {
 					connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
 					//Setstate();

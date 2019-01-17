@@ -17,7 +17,7 @@ Server::Server(const string &serverName)
     listen(sListen, SOMAXCONN);
 
 }
-void Server::startServer() {
+void Server::start(const string &a) {
     while (true) {
         char message[200];
 		//^新增使用者

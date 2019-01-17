@@ -5,7 +5,8 @@
 class Client:public TCPChatRoom,public Instruction,public Personality {
 public:
     Client(const string &);
-    void startClient(const string &);
+	virtual void start(const string &) ;
+    //void startClient(const string &);
     void setUserName(const string &);
     void sendUserName();
     void recvOnlineUserList();

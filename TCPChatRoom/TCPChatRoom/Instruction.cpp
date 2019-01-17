@@ -29,9 +29,6 @@ void Instruction::cutInput() {
 	//checkInstruction();
 }
 
-void Instruction::refresh() {
-	system("cls");
-}
 
 void Instruction::gotoxy(int xpos, int ypos) {
 	COORD scrn;

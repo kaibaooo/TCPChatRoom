@@ -14,6 +14,7 @@ public:
     TCPChatRoom(const string&);
     void setRoomName(const string&);
     string getRoomName();
+    virtual void start(const string &)=0;
 private:
     string roomName;
 };
