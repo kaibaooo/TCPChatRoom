@@ -11,8 +11,8 @@ void Personality::Addfriend(string name) {
 				}
 				else if (j == 4 && friends[j] != name) {
 					for (int k = 0; k < 5; k++){
-						if (friends[k] != "0") {
-							friends[k] == name;
+						if (friends[k] == "0") {
+							friends[k] = name;
 							cout << name << "is added to your friends' list successfully¡I" << endl;
 							break;
 						}
@@ -25,7 +25,7 @@ void Personality::Addfriend(string name) {
 			cout << name << " is not in member\n";
 		}
 	}
-	Showinstruction();
+	//Showinstruction();
 }
 void Personality::Deletefriend(string name) {
 	for (int i = 0; i < 5; i++) {
@@ -46,20 +46,24 @@ void Personality::Deletefriend(string name) {
 			cout << name << " is not in member\n";
 		}
 	}
-	Showinstruction();
+	//Input();
 }
 void Personality::Setstate() {
 	cout << "enter your personality signature¡I\n";
 	cin >> setstate;
 }
 void Personality::Showfriends() {
+	bool lonely = true;
 	for (int i = 0; i < 5; i++) {
 		if (friends[i] == "0") {
 			continue;
 		}
 		else {
 			cout << friends[i] << endl;
+			lonely = false;
 		}
 	}
-	Showinstruction();
+	if (lonely == true)
+		cout << "You don't have any friend.QQ" << endl;
+	//Input();
 }

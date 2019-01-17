@@ -17,15 +17,15 @@ public:
     };
 protected:
     vector<string> msgs; //sourcename,msgs
-	vector<pair<string, string>> privateMsgs;
+	vector<string> privateMsgs;
     //vector<privateMsg> priMsgs;
     //vector<pair<string, string>> onlineUser;//ip+port,username
     vector<pair<string, string>>::iterator iter2;
     map<string, string> onlineUser;
     map<string, string>::iterator iter;
     vector<string>::iterator iterMsgs;
-    string userNameList;//¦^¶Çµ¹clinet
-	string allChatList;//¦^¶Çµ¹clinet
+    string userNameList;//¦^¶Çµ¹client
+	string allChatList;//¦^¶Çµ¹client
 private:
     char serverIP[20];
     int serverPort;
@@ -38,5 +38,4 @@ private:
     SOCKET sListen;
     SOCKET sConnect;
     SOCKADDR_IN clinetAddr;
-    
 };

@@ -11,7 +11,7 @@ void AllMember::Loadaccount(string name) {
 	for (int i = 0; i < 5; i++){
 		if (name == Allmember[i]) {
 			Online[i] = name;
-			Showinstruction();
+			//Input();
 			break;
 		}
 		else {
@@ -40,14 +40,11 @@ void AllMember::Showonline() {
 			cout << Online[i] << endl;
 		}
 	}
-	Showinstruction();
+	//Input();
 }
 void AllMember::Showallmember() {
 	for (int i = 0; i < 5; i++) {
 		cout << Allmember[i] << endl;
 	}
-	Showinstruction();
-}
-void AllMember::Showinstruction() {
-	//交給你了~
+	//Input();
 }

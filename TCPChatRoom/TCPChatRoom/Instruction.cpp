@@ -1,4 +1,5 @@
 #include<iostream>
+#include<windows.h>
 #include<string>
 #include<sstream>
 #include<vector>
@@ -6,13 +7,11 @@
 
 using namespace std;
 
-Instruction::Instruction() {
-}
-
-Instruction::~Instruction() {
-}
-
 void Instruction::Input() {
+	ShowInstruction();
+	detail.clear();
+	gotoxy(0, 25);
+	cout << ">> ";
 	getline(cin, original);
 	cutInput();
 }
@@ -25,73 +24,61 @@ void Instruction::cutInput() {
 	while (getline(buf, text, '/')) {
 		detail.push_back(text);
 	}
-	checkInstruction();
-}
-
-
-void Instruction::checkInstruction() {//用personality的function
-	int len = detail.size();
-	if (len < 2) {
-		cout << original << "is an illagle instruction." << endl;
-	}
-	else if (detail[0] == "set") {
-		if (detail[1]=="addfriend") {
-
-		}
-		else if (detail[1] == "deletefriend") {
-
-		}
-		else if (detail[1] == "setstate") {
-
-		}
-		else {
-			cout << detail[1] << "is invaild instruction" << endl;
-		}
-	}
-	else if (detail[0] == "show") {
-		if (detail[1] == "online") {
-
-		}
-		else if (detail[1] == "allmember") {
-
-		}
-		else if (detail[1] == "instruction") {
-
-		}
-		else if (detail[1] == "signater") {
-
-		}
-		else {
-			cout << detail[1] << "is invaild instruction" << endl;
-		}
-	}
-	else if (detail[0] == "send") {
-		//還沒寫
-	}
-	else {
-		cout << detail[0] << "is invaild instruction" << endl;
-	}
-	
+	//checkInstruction();
 }
 
 void Instruction::refresh() {
 	system("cls");
 }
 
-void Instruction::showformat() {
-	cout << "SET" << endl;
-	cout << "set/addfriend/name" << endl;
-	cout << "set/deletefriend/name" << endl;
-	cout << "setstate/state" << endl << endl;
-
-	cout << "SEND MESSAGE" << endl;
-	cout << "send/group/name/message" << endl;
-	cout << "send/friend/name/message" << endl << endl;
-
-	cout << "SHOW" << endl;
-	cout << "show/online" << endl;
-	cout << "show/allmember" << endl;
-	cout << "show/instruction" << endl;
-	cout << "show/signater" << endl;
+void Instruction::gotoxy(int xpos, int ypos) {
+	COORD scrn;
+	HANDLE hOuput = GetStdHandle(STD_OUTPUT_HANDLE);
+	scrn.X = xpos; scrn.Y = ypos;
+	SetConsoleCursorPosition(hOuput, scrn);
 }
+
+void Instruction::ShowInstruction() {
+	for (int i = 0; i < 25; i++) {
+		gotoxy(88, i);
+		cout << "▎";
+	}
+	gotoxy(90, 3);
+	cout << "All Instruction";
+
+	gotoxy(90, 5);
+	cout << "SET" << endl;
+	gotoxy(90, 6);
+	cout << "set/addfriend/name" << endl;
+	gotoxy(90, 7);
+	cout << "set/deletefriend/name" << endl;
+	gotoxy(90, 8);
+	cout << "setstate/state" << endl;
+
+	gotoxy(90, 10);
+	cout << "SEND MESSAGE" << endl;
+	gotoxy(90, 11);
+	cout << "send/group/name/message" << endl;
+	gotoxy(90, 12);
+	cout << "send/friend/name/message" << endl;
+
+	gotoxy(90, 14);
+	cout << "SHOW" << endl;
+	gotoxy(90, 15);
+	cout << "show/online" << endl;
+	gotoxy(90, 16);
+	cout << "show/allmember" << endl;
+	gotoxy(90, 17);
+	cout << "show/instruction" << endl;
+	gotoxy(90, 18);
+	cout << "show/signater" << endl;
+	gotoxy(90, 19);
+	cout << "show/friends" << endl;
+	gotoxy(0, 24);
+	for (int i = 0; i < 44; i++) {
+		cout << "▅";
+	}
+
+}
+
 

@@ -9,7 +9,7 @@ Server::Server(const string &serverName)
     DLLVSERION = MAKEWORD(2, 1);
     r = WSAStartup(DLLVSERION, &wsaData);
     sConnect = socket(AF_INET, SOCK_STREAM, NULL);
-    addr.sin_addr.s_addr = inet_addr("192.168.0.107");
+    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     addr.sin_family = AF_INET;
     addr.sin_port = htons(15501);
     sListen = socket(AF_INET, SOCK_STREAM, NULL);
@@ -22,6 +22,8 @@ void Server::startServer() {
         char message[200];
 		//^新增使用者
 		//&新增訊息
+        //@重整
+        //$私訊
         cout << "waiting..." << endl;
         if (sConnect = accept(sListen, (SOCKADDR*)&clinetAddr, &addrlen)) {
             //RECV
@@ -96,8 +98,9 @@ void Server::recvMsg(char *message) {
 	msgs.push_back(oneTalk);
 	cout << oneTalk;
 	allChatList.clear();
-	if (msgsNum >= 10) {
-		for (iterMsgs = msgs.begin() + msgsNum - 10; iterMsgs != msgs.end(); iterMsgs++) {
+	//控制大聊天室只有10筆資料
+	if (msgsNum >= 20) {
+		for (iterMsgs = msgs.begin() + msgsNum - 20; iterMsgs != msgs.end(); iterMsgs++) {
 			allChatList = allChatList + *iterMsgs;
 		}
 	}
@@ -109,13 +112,9 @@ void Server::recvMsg(char *message) {
 	send(sConnect, allChatList.c_str(), allChatList.length(), 0);
 }
 void Server::recvPrivateMsg(char*message) {
-    /*
-    struct privateMsg {
-        char *sender;
-        char *recver;
-        char *msg;
-    };
-    */
+	privateMsgs.push_back(string(message));
+
+	/*原版本
 	char sourName[200];
 	char destName[200];//first
 	char privateMsga[200];
@@ -152,29 +151,70 @@ void Server::recvPrivateMsg(char*message) {
 			num[2]++;
 		}
 	}
-	/*
-	privateMsg privateMsgTemp;
-	privateMsgTemp.sender = sourName;
-	privateMsgTemp.recver = destName;
-	privateMsgTemp.msg = privateMsga;
-    priMsgs.push_back(privateMsgTemp);
-	*/
+	
+	
     privateMsgs.push_back(make_pair(string(destName), string(sourName)+ string(privateMsga)));
 	for (iter2 = privateMsgs.begin(); iter2 != privateMsgs.end(); iter2++) {
 		cout << iter2->first << " " << iter2->second << endl;
 	}
-
+	*/
 }
+
 void Server::sendPrivateMsg(char *message) {
-	char name[20];
-	string sendMsg;
-	for (int i = 1; i <=strlen(message); i++) {
-		name[i - 1] = message[i];//
+	string sourName;//來源的人
+	string destName;//frien
+	string s = string(message);
+	int pos = 1;
+	string suber = "/";
+	string token;
+	s = s.substr(1);
+
+	while ((pos = s.find(suber)) != string::npos) {
+		token = s.substr(0, pos);
+		sourName = token;
+		s.erase(0, pos + suber.length());
 	}
-    for (iter2 = privateMsgs.begin(); iter2 != privateMsgs.end(); iter2++) {
-		if (iter2->first == string(name)) {
-			sendMsg = sendMsg + iter2->second;
+	destName = s;
+	cout << sourName << endl;
+	cout << destName << endl;
+	
+	int flag = 0;
+	string sendMsg;//要送出的字串
+    for (iterMsgs = privateMsgs.begin(); iterMsgs != privateMsgs.end(); iterMsgs++) {
+		//解析privateMsgs的資料
+		string che_sourName;
+		string che_destName;
+		string che_privateMsga;
+		string s = *iterMsgs;//歷史所有的私訊疊代器
+		
+		int pos = 1;
+		string suber = "/";
+		string token;
+		s = s.substr(1);
+		int flat = 0;
+		while ((pos = s.find(suber)) != string::npos) {
+			token = s.substr(0, pos);
+			if (flat == 0) {
+				che_sourName = token;
+				flat++;
+			}
+			else if (flat == 1) {
+				che_destName = token;
+			}
+			s.erase(0, pos + suber.length());
+			che_privateMsga=s;
 		}
+
+		//判斷是不是
+		if (destName == che_destName&& sourName == che_sourName) {
+			sendMsg = sendMsg + destName + "->" + sourName + ":" + che_privateMsga + "\n";
+        }
+        else if (destName == che_sourName && sourName== che_destName) {
+			sendMsg = sendMsg + sourName + "->" + destName + ":" + che_privateMsga + "\n";
+        }
     }	
+	if (sendMsg.length()==0) {
+		sendMsg = "No one want to send a message to you, Nerd";
+	}
 	send(sConnect, sendMsg.c_str(), sendMsg.length(), 0);
 }

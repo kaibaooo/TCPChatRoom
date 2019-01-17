@@ -16,7 +16,7 @@ public:
 	void Offaccount(string); //(登出會員)
 	void Showonline(); //(顯示線上的人)
 	void Showallmember(); //(顯示所有人)
-	void Showinstruction(); //(顯示指令)
+	//void Showinstruction(); //(顯示指令)-Instruction
 	void ShowEveryPersonalitySignature();//(顯示所有人的個簽)還沒寫XD
 
 

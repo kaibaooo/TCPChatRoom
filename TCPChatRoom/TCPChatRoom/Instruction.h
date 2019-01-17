@@ -7,17 +7,14 @@ using namespace std;
 
 class Instruction {
 public:
-	Instruction();
-	~Instruction();
 	void Input();
 	void cutInput();
 	void refresh();
-	virtual void checkInstruction();//設虛擬函式，實作Personality
-	void showformat();
+	void ShowInstruction();
+	//virtual void checkInstruction();//設虛擬函式，實作Personality
+	void gotoxy(int, int);
 
 protected:
 	string original;
 	vector<string> detail;
-
-
 };
