@@ -27,7 +27,7 @@ public:
 	//string Password; //(密碼)
 	string Name; //(名子)
 	//char allmemberaccount[5]; //(紀錄所有會員帳密名稱)
-	string Allmember[5] = { "張宇翔","潘彥霖","黃凱倫","邱思蓉","我想吃豚醬" }; //(所有會員)
+	string Allmember[5] = { "lulalabana","arpan","cheryl","kaibao","ifTNTpayMoney" }; //(所有會員)
 	string Online[5] = { "0" }; //(現在在線上的人)
 
 };

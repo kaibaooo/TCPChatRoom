@@ -19,7 +19,8 @@ void Client::startClient(const string &usrName_) {
 	sendUserName();
 	//recvOnlineUserList();
 	while (1) {
-		
+		gotoxy(90, 2);
+		cout << "Welecome! " << userName;
 		//string confirm;
 		SOCKET sConnect;
 		sConnect = socket(AF_INET, SOCK_STREAM, NULL);
@@ -48,22 +49,53 @@ void Client::startClient(const string &usrName_) {
 					cout << original << " is an illagle instruction." << endl;
 				}
 			}
-			else if (detail[1] == "setstate") {
-				Setstate();
+			else if (detail[1] == "state") {
+				if (detail.size() == 3) {
+					connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+					//Setstate();
+					/*string status;
+					cout << "New Status : ";
+					cin >> status;*/
+					//send(sConnect, ("*" + userName + "/" + status).c_str(), ("*" + userName + "/" + status).length(), 0);
+					send(sConnect, ("*" + userName + "/" + detail[2]).c_str(), ("*" + userName + "/" + detail[2]).length(), 0);
+					ZeroMemory(message, 2000);
+					r = recv(sConnect, message, sizeof(message), 0);
+					//ui.print(message);
+					cout << message << endl;
+					closesocket(sConnect);
+					//}
+					//const char *spliter = ":";
+					//split(message, spliter);
+				}
+				else {
+					cout << original << " is an illagle instruction." << endl;
+				}
+			}
+			else if (detail[1] == "exit") {
+				connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+				send(sConnect, ("#"+userName).c_str(), ("#" + userName).length(), 0);
+				exit(1);
+				//closesocket(sConnect);
 			}
 			else {
-				cout << detail[1] << " is invaild instruction" << endl;
+				cout << detail[1] << " is illagle instruction." << endl;
 			}
 		}
 		else if (detail[0] == "show") {
 			if (detail[1] == "online") {
-				sendUserName();
+                recvOnlineUserList();
 			}
 			else if (detail[1] == "allmember") {
 				Showallmember();
 			}
-			else if (detail[1] == "signaters") {
+			else if (detail[1] == "allsignaters") {
 				//ShowEveryPersonalitySignature();
+				connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+				send(sConnect, "~", strlen("~"), 0);
+				ZeroMemory(message, 2000);
+				r = recv(sConnect, message, sizeof(message), 0);
+				cout << message << endl;
+				closesocket(sConnect);
 			}
 			else if (detail[1] == "friends") {
 				Showfriends();
@@ -97,7 +129,7 @@ void Client::startClient(const string &usrName_) {
 				}
 			}
 			else {
-				cout << detail[1] << "is invaild instruction" << endl;
+				cout << detail[1] << " is illagle instruction." << endl;
 			}
 		}
 		else if (detail[0] == "send") {
@@ -120,7 +152,7 @@ void Client::startClient(const string &usrName_) {
 					//split(message, spliter);
 				}
 				else {
-					cout << original << "is invaild instruction";
+					cout << original << "is illagle instruction.";
 				}
 			}
 			else if (detail[1] == "friend") {
@@ -143,16 +175,19 @@ void Client::startClient(const string &usrName_) {
 					//split(message, spliter);	
 				}
 				else {
-					cout << original << "is invaild instruction";
+					cout << original << " is illagle instruction.";
 				}
 			}
 			else {
-				cout << detail[1] << "is invaild instruction" << endl;
+				cout << detail[1] << "is illagle instruction." << endl;
 			}
 
 		}
+		else {
+			cout << original << "is illagle instruction." << endl;
+		}
         /*
-		else if (confirm == "U") { //refresh private message
+		else if (confirm == "U") { //refresh private signature
 			string status;
 			cout << "New Status : ";
 			cin >> status;
@@ -165,7 +200,7 @@ void Client::startClient(const string &usrName_) {
 			//const char *spliter = ":";
 			//split(message, spliter);
 		}
-		else if (confirm == "Q") {
+		else if (confirm == "Q") {//show all signatue
 			send(sConnect, "~", strlen("~"), 0);
 			ZeroMemory(message, 2000);
 			r = recv(sConnect, message, sizeof(message), 0);
@@ -195,7 +230,16 @@ void Client::sendUserName() {
     closesocket(sConnect);
 }
 void Client::recvOnlineUserList() {
-    
+    SOCKET sConnect;
+    sConnect = socket(AF_INET, SOCK_STREAM, NULL);
+    connect(sConnect, (SOCKADDR*)&addr, sizeof(addr));
+    send(sConnect, "=", strlen("="), 0);
+    ZeroMemory(message, 2000);
+    r = recv(sConnect, message, sizeof(message), 0);
+    onlineUser = message;
+    cout << "目前在線上的名單為 : ";
+    cout << message << endl;
+    closesocket(sConnect);
 }
 void Client::split(char * str, const char * s) {
     int iCurName = 0;
@@ -209,67 +253,3 @@ void Client::split(char * str, const char * s) {
         token = strtok(NULL, s);
     }
 }
-/*
-void Client::checkInstruction() {
-	int len = detail.size();
-	if (len < 2) {
-		cout << original << "is an illagle instruction." << endl;
-	}
-	else if (detail[0] == "set") {
-		if (detail[1] == "addfriend") {
-			if (len == 3) {
-				Addfriend(detail[2]);
-			}
-			else {
-				cout << original << "is an illagle instruction." << endl;
-			}
-		}
-		else if (detail[1] == "deletefriend") {
-			if (len == 3) {
-				Deletefriend(detail[2]);
-			}
-			else {
-				cout << original << "is an illagle instruction." << endl;
-			}
-		}
-		else if (detail[1] == "setstate") {
-			Setstate();
-		}
-		else {
-			cout << detail[1] << "is invaild instruction" << endl;
-		}
-	}
-	else if (detail[0] == "show") {
-		if (detail[1] == "online") {
-			sendUserName();
-		}
-		else if (detail[1] == "allmember") {
-			Showallmember();
-		}
-		else if (detail[1] == "signaters") {
-			ShowEveryPersonalitySignature();
-		}
-		else if (detail[1] == "friends") {
-			Showfriends();
-		}
-		else {
-			cout << detail[1] << "is invaild instruction" << endl;
-		}
-	}
-	else if (detail[0] == "send") {
-		if (detail[1] == "group") {
-			cout << "function is not finished yet." << endl;
-		}
-		else if (detail[1] == "friend") {
-			cout << "function is not finished yet." << endl;
-			Input();
-		}
-	}
-	else {
-		cout << detail[0] << "is invaild instruction" << endl;
-		Input();
-	}
-
-}
-}
-*/

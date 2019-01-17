@@ -52,6 +52,12 @@ void Server::startServer() {
 			else if (message[0] == '~') {
 				sendUserStatus();
 			}
+            else if (message[0] == '=') {
+                sendUserList();
+			}
+			else if (message[0]='#') {
+				deletUser(message);
+			}
 			/*
             userNameList = userNameList + string(userNameinput) + ":";
             onlineUser[userNameinput] = string(inet_ntoa(clinetAddr.sin_addr)) + ":" + to_string(clinetAddr.sin_port);
@@ -76,7 +82,7 @@ void Server::startServer() {
             if (message == "@RefreshPLZ") {
 
             }
-            const char *sendbuf = "Response From Server";
+            const char *sendbuf = "Success";
             send(sConnect, sendbuf, (int)strlen(sendbuf), 0);
             closesocket(sConnect);
         }
@@ -104,7 +110,7 @@ void Server::recvMsg(char *message) {
 	msgs.push_back(oneTalk);
 	cout << oneTalk;
 	allChatList.clear();
-	//控制大聊天室只有10筆資料
+	//控制大聊天室只有20筆資料
 	if (msgsNum >= 20) {
 		for (iterMsgs = msgs.begin() + msgsNum - 20; iterMsgs != msgs.end(); iterMsgs++) {
 			allChatList = allChatList + *iterMsgs;
@@ -289,4 +295,32 @@ void Server::sendUserStatus() {
 	*/
 	
 	send(sConnect, sendMsg.c_str(), sendMsg.length(), 0);
+}
+void Server::deletUser(char*message) {
+	string s;
+	s = userNameList;
+	string name;
+	name = string(message).substr(1);
+	int pos = 1;
+	string suber = ":";
+	string token;
+	int mun = 0;
+	int flat = 0;
+	while ((pos = s.find(suber)) != string::npos) {
+		token = s.substr(0, pos);
+        cout << "token : " << token << endl;
+		if (name == token) {
+			flat = 1;
+		}
+		else if (flat == 0) {
+			mun = mun + pos + 1;
+		}
+		s.erase(0, pos + suber.length());
+	}
+	userNameList.erase(mun, name.length() + 1);
+}
+
+void Server::sendUserList() {
+	cout << "in sendUserList : " << userNameList << endl;
+    send(sConnect, userNameList.c_str(), userNameList.length(), 0);
 }

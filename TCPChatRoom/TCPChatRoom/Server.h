@@ -12,6 +12,9 @@ public:
     void sendPrivateMsg(char*);
 	void recvUserStatus(char*);
 	void sendUserStatus();
+	void deletUser(char*);
+	
+    void sendUserList();
     struct privateMsg {
         char *sender;
         char *recver;

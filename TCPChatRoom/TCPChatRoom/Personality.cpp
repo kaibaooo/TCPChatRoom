@@ -13,7 +13,7 @@ void Personality::Addfriend(string name) {
 					for (int k = 0; k < 5; k++){
 						if (friends[k] == "0") {
 							friends[k] = name;
-							cout << name << "is added to your friends' list successfully¡I" << endl;
+							cout << name << " is added to your friends' list successfully¡I" << endl;
 							break;
 						}
 					}
@@ -48,10 +48,10 @@ void Personality::Deletefriend(string name) {
 	}
 	//Input();
 }
-void Personality::Setstate() {
-	cout << "enter your personality signature¡I\n";
-	cin >> setstate;
-}
+//void Personality::Setstate() {
+//	cout << "enter your personality signature¡I\n";
+//	cin >> setstate;
+//}
 void Personality::Showfriends() {
 	bool lonely = true;
 	for (int i = 0; i < 5; i++) {

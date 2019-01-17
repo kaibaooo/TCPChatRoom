@@ -1,2 +1,11 @@
-﻿  Instruction.cpp
+﻿  Client.cpp
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(31): warning C4267: '正在初始化': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(60): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(76): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(94): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(120): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(143): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(168): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(224): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+c:\users\admin\desktop\tcpchatroom\tcpchatroom\tcpchatroom\client.cpp(236): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
   TCPChatRoom.vcxproj -> C:\Users\Admin\Desktop\TCPChatRoom\TCPChatRoom\x64\Debug\TCPChatRoom.exe
