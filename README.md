@@ -7,12 +7,10 @@
 ### 黃凱崙(A1065514)
 * TCP Client Class
 ### 潘彥霖(A1065529)
-* Instruction Class
 * Personality
 * AllMember
 ### 邱思蓉(A1065535)
 * Instruction Class
-* Personality
-* AllMember
+* UI
 ## LICENSE
 MIT
